@@ -11,8 +11,6 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(name = "Student")
 @Table(
         name = "student",
@@ -65,6 +63,16 @@ public class Student {
             nullable = false
     )
     private int age;
+
+    public Student(String firstName, String lastName, String email, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+    }
+
+    public Student() {
+    }
 
     @Override
     public String toString() {
