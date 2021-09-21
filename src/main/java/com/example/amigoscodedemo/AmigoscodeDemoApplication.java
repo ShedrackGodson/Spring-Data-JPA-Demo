@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class AmigoscodeDemoApplication {
@@ -51,8 +52,29 @@ public class AmigoscodeDemoApplication {
             students.forEach(System.out::println);
 
 
-            System.out.println("Delete Seth_2");
-//            studentRepository.deleteById(3L);
+            System.out.println("Find Student by Email");
+
+            Optional<Student> student = studentRepository.findStudentByEmail("abed@company.go");
+            if(student.isPresent()){
+                System.out.println(student);
+            } else {
+                System.out.println("Student with that email address does not exists.");
+            }
+
+            System.out.println("Filtering Students");
+            List<Student> studentsByFirstNamesAndAges = studentRepository.selectStudentWhereFirstNameAndAgeGreaterOrEqual(
+                    "Seth", 18
+            );
+            System.out.println(studentsByFirstNamesAndAges);
+
+            System.out.println("Filtering Students Using Native Query");
+            List<Student> studentsByFirstNamesAndAgesNative = studentRepository.selectStudentWhereFirstNameAndAgeGreaterOrEqualNative(
+                    "Tabitha", 18
+            );
+            System.out.println(studentsByFirstNamesAndAgesNative);
+
+            System.out.println("Delete Student by ID using Native Query");
+            System.out.println("Deleted student with an ID of " + studentRepository.deleteStudentById(1L));
 
         };
     }
